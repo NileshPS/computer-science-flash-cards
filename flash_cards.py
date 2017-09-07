@@ -2,6 +2,9 @@ import os
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
+import markdown2
+import html
+
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -14,6 +17,8 @@ app.config.update(dict(
     PASSWORD='default'
 ))
 app.config.from_envvar('CARDS_SETTINGS', silent=True)
+
+print(app.config['DATABASE'])
 
 
 def connect_db():
@@ -74,7 +79,12 @@ def cards():
         ORDER BY id DESC
     '''
     cur = db.execute(query)
-    cards = cur.fetchall()
+    rows = cur.fetchall()
+    cards = []
+    for card in rows:
+        cards.append(dict(card))
+        if card['type'] == 1:
+            cards[-1]['back'] = markdown2.markdown(html.escape(card['back']))
     return render_template('cards.html', cards=cards, filter_name="all")
 
 

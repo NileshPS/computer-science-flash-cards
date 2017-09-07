@@ -48,16 +48,18 @@
         {% for card in cards %}
             <tr>
                 <td>
-                    <a href="{{ url_for('edit', card_id=card.id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{{ url_for('edit', card_id=card.id) }}" class="btn btn-xs btn-primary">
+                        <span class='glyphicon glyphicon-edit' />
+                    </a>
                 </td>
                 <td class="cardContent">
                     <h4>
                         {{ card.front }}
                     </h4>
                     {% if card.type == 1 %}
-                        {{ card.back|replace("\n", "<br />")|safe }}
+                        {{ card.back | safe }}
                     {% else %}
-                        <pre><code>{{ card.back|escape }}</code></pre>
+                        <pre style="padding: 0"><code>{{ card.back  }}</code></pre>
                     {% endif %}
                 </td>
             </tr>
