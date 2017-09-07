@@ -8,4 +8,6 @@ $ git clone https://github.com/NileshPS/computer-science-flash-cards && cd compu
 
 $ pip install -r requirements.txt
 
+$ cd static && bower install && cd ..
+
 $ ./run.sh (module-name?)
